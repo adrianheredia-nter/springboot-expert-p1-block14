@@ -30,7 +30,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
         String header = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (header != null && header.startsWith(BEARER_PREFIX)) {
+        if (header != null && header.regionMatches(true, 0, BEARER_PREFIX, 0, BEARER_PREFIX.length())) {
             authenticate(header.substring(BEARER_PREFIX.length()), request);
         }
         chain.doFilter(request, response);

@@ -76,6 +76,12 @@ class AuthControllerTest {
     }
 
     @Test
+    void bearerSchemeIsCaseInsensitive() throws Exception {
+        mockMvc.perform(post("/auth/refresh").header(HttpHeaders.AUTHORIZATION, "bearer " + tokenFor("admin")))
+                .andExpect(status().isOk());
+    }
+
+    @Test
     void refreshWithoutTokenIsUnauthorized() throws Exception {
         mockMvc.perform(post("/auth/refresh"))
                 .andExpect(status().isUnauthorized());
