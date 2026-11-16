@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -25,8 +26,8 @@ public class InvoiceController {
     private final InvoiceService invoiceService;
 
     @GetMapping
-    public List<InvoiceResponse> findAll() {
-        return invoiceService.findAll();
+    public List<InvoiceResponse> findAll(@RequestParam(required = false) Long contractId) {
+        return contractId == null ? invoiceService.findAll() : invoiceService.findByContract(contractId);
     }
 
     @GetMapping("/{id}")
